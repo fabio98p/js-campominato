@@ -1,7 +1,9 @@
 console.log("ciao ale");
-
+//lo so è un casino e dovrei abituarmi a mettere commenti ma si è fatto un po tardi ed questo è quello che sono riuscito a fare....
+//prossimo esercizio prometto di mettere i commenti fin dall'inizio
 //select dificulty 
-var difficolta = 0
+
+//se si preme un numero diverso da 0 1 2 entra in un loop infinito
 do {
 	difficolta = parseInt(prompt("scegli la dificolta tra 0, 1, 2", "0"));
 } while (isNaN(difficolta) || difficolta < 0 || difficolta > 2);
@@ -31,37 +33,28 @@ var arrayWithBomb = []
 
 for (let i = 1; i <= caselle; i++) {
 	//arrayWithBomb.push(bomb.includes(i));
-
+	let a = bomb.includes(i)
 	if (bomb.includes(i)) {
 		arrayWithBomb.push(false);
 	} else {
 		arrayWithBomb.push(true);
 	}
+	document.getElementById("campo").innerHTML += `<div id="casella` + i + `" onclick="myClick('casella` + i + `')" class="` + !a + `">ciao</div>`
+	
 }
-
 var arrayPlayer = []
-var userNumber
-var observer = true
 
-for (let i = 1; i <= (caselle - 16); i++) {
-	observer = true
-	do {
-		if (observer) {
-			observer = false
-			userNumber = parseInt(prompt("scrivi un numero da 1 a " + caselle, "1"));
-		}
-		else {
-			userNumber = parseInt(prompt("hai sbagliato a scrivere, scrivi un altro numero", "1"));
-		}
-	} while (arrayPlayer.includes(userNumber) || isNaN(userNumber) || userNumber < 1 || userNumber > caselle);
-	console.log(userNumber, caselle);
+function myClick(param) {
 
-	if (!arrayWithBomb[userNumber - 1]) {//-1 perche è un array
-		console.log("game over");
-		console.log("hai fatto " + arrayPlayer.length + " punti");
-		break;
+	if (document.getElementById(param).classList[0] == "false") {
+		console.log("hai perso");
+		console.log(arrayPlayer.length);
 	}
-	arrayPlayer.push(userNumber)
+	if (!(arrayPlayer.includes(document.getElementById(param).id))) {
+		arrayPlayer.push(param)
+	}
+	console.log(arrayPlayer);
+
 }
 
 function random(min, max) {
