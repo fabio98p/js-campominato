@@ -1,33 +1,32 @@
 console.log("ciao ale");
 
 //select dificulty 
-// var difficolta = 0
-// var caselle = 0
-// switch (difficolta) {
-// 	case 0:
-// 		caselle = 100
-// 		break;
-// 	case 0:
-// 		caselle = 80
-// 		break;
-// 	case 0:
-// 		caselle = 50
-// 		break;
-// 	default:
-// 		break;
-// }
+var difficolta = parseInt(prompt("scegli la dificolta tra 0, 1, 2", "0"));
+
+var caselle = 0
+switch (difficolta) {
+	case 0:
+		caselle = 100
+		break;
+	case 1:
+		caselle = 80
+		break;
+	case 2:
+		caselle = 50
+		break;
+}
 var bomb = [];
 var x = 0;
 for (let i = 0; i < 16; i++) {
 	do {
-		x = random(1, 100);
+		x = random(1, caselle);
 	} while (bomb.includes(x));
 	bomb.push(x);
 }
 
 var arrayWithBomb = []
 
-for (let i = 1; i <= 100; i++) {
+for (let i = 1; i <= caselle; i++) {
 	//arrayWithBomb.push(bomb.includes(i));
 
 	if (bomb.includes(i)) {
@@ -38,24 +37,29 @@ for (let i = 1; i <= 100; i++) {
 }
 
 var arrayPlayer = []
-var y
+var userNumber
+var observer = true
 
-for (let i = 1; i <= (100 - 16); i++) {
-
+for (let i = 1; i <= (caselle - 16); i++) {
+	observer = true
 	do {
-		y = parseInt(prompt("scrivi un numero da 1 a 100", "1"));
-	} while (arrayPlayer.includes(y));
+		if (observer) {
+			observer = false
+			userNumber = parseInt(prompt("scrivi un numero da 1 a " + caselle, "1"));
+		}
+		else {
+			userNumber = parseInt(prompt("hai sbagliato a scrivere, scrivi un altro numero", "1"));
+		}
+	} while (arrayPlayer.includes(userNumber) || isNaN(userNumber) || userNumber < 1 || userNumber > caselle);
+	console.log(userNumber, caselle);
 
-	if (!arrayWithBomb[y - 1]) {//-1 perche è un array
+	if (!arrayWithBomb[userNumber - 1]) {//-1 perche è un array
 		console.log("game over");
 		console.log("hai fatto " + arrayPlayer.length + " punti");
 		break;
 	}
-	arrayPlayer.push(y)
-
+	arrayPlayer.push(userNumber)
 }
-
-
 
 function random(min, max) {
 	return Math.floor(Math.random() * (max - min)) + min;
