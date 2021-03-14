@@ -3,7 +3,7 @@ console.log("ciao ale");
 //prossimo esercizio prometto di mettere i commenti fin dall'inizio
 //select dificulty 
 
-//se si preme un numero diverso da 0 1 2 entra in un loop infinito
+//faccio il controllo di dificolta e chiedo per N volte finche non mi da il numero corretto
 do {
 	difficolta = parseInt(prompt("scegli la dificolta tra 0, 1, 2", "0"));
 } while (isNaN(difficolta) || difficolta < 0 || difficolta > 2);
@@ -21,16 +21,17 @@ switch (difficolta) {
 		break;
 }
 var bomb = [];
-var x = 0;
+var randomBomb = 0;
+//mi creo un arrey di 16 bombe con numeri da uno a 100 
 for (let i = 0; i < 16; i++) {
 	do {
-		x = random(1, caselle);
-	} while (bomb.includes(x));
-	bomb.push(x);
+		randomBomb = random(1, caselle);
+	} while (bomb.includes(randomBomb));
+	bomb.push(randomBomb);
 }
 
 var arrayWithBomb = []
-
+//creo un array da 1 a 100 nel quale se c'è la bomba da il valore false se no da vero
 for (let i = 1; i <= caselle; i++) {
 	//arrayWithBomb.push(bomb.includes(i));
 	let a = bomb.includes(i)
@@ -39,22 +40,26 @@ for (let i = 1; i <= caselle; i++) {
 	} else {
 		arrayWithBomb.push(true);
 	}
-	document.getElementById("campo").innerHTML += `<div id="casella` + i + `" onclick="myClick('casella` + i + `')" class="` + !a + `">ciao</div>`
-	
+	//nello stesso tempo creo 100 div con un id unico, con onclick e con classe vero o falso
+	document.getElementById("campo").innerHTML += `<div id="casella${i}" onclick="myClick('casella${i}')" class="${!a}"></div>`
 }
 var arrayPlayer = []
 
 function myClick(param) {
-
+	//se si perde compare la scritta e il quadratino cliccato diventa rosso
 	if (document.getElementById(param).classList[0] == "false") {
-		console.log("hai perso");
 		console.log(arrayPlayer.length);
-	}
-	if (!(arrayPlayer.includes(document.getElementById(param).id))) {
-		arrayPlayer.push(param)
-	}
-	console.log(arrayPlayer);
+		document.getElementsByClassName("noob")[0].classList.add("active")
+		document.getElementById(param).classList.add("active-evil")
 
+	}//se si vince il quadratino diventa verde e tiene conto dei punti nel arrayPlayer
+	else{
+		if (!(arrayPlayer.includes(document.getElementById(param).id))) {
+			arrayPlayer.push(param)
+			document.getElementById(param).classList.add("active-good")
+
+		}
+	}
 }
 
 function random(min, max) {
